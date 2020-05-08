@@ -1,10 +1,15 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
+import psycopg2
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-db = SQLAlchemy(app)
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+#db = SQLAlchemy(app)
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
